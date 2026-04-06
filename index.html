@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Textkernel — Connect People and Jobs, Smarter Than Ever</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ========== RESET & BASE ========== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #f8f9fc;
+  --surface: #ffffff;
+  --navy: #1a2744;
+  --navy-light: #243352;
+  --slate: #5a6a85;
+  --slate-light: #8494ab;
+  --orange: #ff7b2e;
+  --orange-hover: #ff6a14;
+  --blue: #4a9eff;
+  --blue-light: #7ab8ff;
+  --teal: #00c896;
+  --teal-light: #33d6ad;
+  --border: #e4e8f0;
+  --shadow-sm: 0 1px 3px rgba(26,39,68,0.06), 0 1px 2px rgba(26,39,68,0.04);
+  --shadow-md: 0 4px 16px rgba(26,39,68,0.08), 0 2px 4px rgba(26,39,68,0.04);
+  --shadow-lg: 0 12px 40px rgba(26,39,68,0.12), 0 4px 12px rgba(26,39,68,0.06);
+  --shadow-xl: 0 20px 60px rgba(26,39,68,0.15), 0 8px 20px rgba(26,39,68,0.08);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --radius-lg: 16px;
+  --transition: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--navy);
+  line-height: 1.6;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* ========== TYPOGRAPHY ========== */
+h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.5px; line-height: 1.2; }
+h1 { font-size: clamp(40px, 4vw, 56px); }
+h2 { font-size: clamp(32px, 3vw, 44px); }
+h3 { font-size: 20px; }
+h4 { font-size: 16px; font-weight: 600; }
+p { color: var(--slate); line-height: 1.7; }
+
+.label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--orange);
+}
+
+/* ========== LAYOUT ========== */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+section {
+  padding: 100px 0;
+}
+
+/* ========== FADE-IN ANIMATION ========== */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.fade-in-delay-1 { transition-delay: 0.1s; }
+.fade-in-delay-2 { transition-delay: 0.2s; }
+.fade-in-delay-3 { transition-delay: 0.3s; }
+.fade-in-delay-4 { transition-delay: 0.4s; }
+
+/* ========== NAVIGATION ========== */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  height: 72px;
+  display: flex;
+  align-items: center;
+  transition: box-shadow var(--transition);
+}
+.nav.scrolled {
+  box-shadow: 0 2px 20px rgba(26,39,68,0.08);
+}
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 40px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-wordmark {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--navy);
+  letter-spacing: -0.5px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  list-style: none;
+}
+.nav-links a {
+  text-decoration: none;
+  color: var(--slate);
+  font-size: 14px;
+  font-weight: 500;
+  transition: color var(--transition-fast);
+  cursor: pointer;
+}
+.nav-links a:hover {
+  color: var(--navy);
+}
+.btn-demo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--orange);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 22px;
+  border-radius: 8px;
+  border: none;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+  box-shadow: 0 2px 8px rgba(255,123,46,0.3);
+}
+.btn-demo:hover {
+  background: var(--orange-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(255,123,46,0.4);
+}
+.btn-demo:active {
+  transform: translateY(0);
+}
+
+/* ========== HERO ========== */
+.hero {
+  padding-top: 160px;
+  padding-bottom: 100px;
+  text-align: center;
+}
+.hero .label {
+  margin-bottom: 20px;
+  display: block;
+}
+.hero h1 {
+  max-width: 720px;
+  margin: 0 auto 24px;
+}
+.hero-subtitle {
+  max-width: 600px;
+  margin: 0 auto 60px;
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+/* Dashboard Cards Grid */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.dash-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 24px;
+  text-align: left;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition), box-shadow var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+.dash-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+.dash-card-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--slate);
+  margin-bottom: 8px;
+  letter-spacing: 0.3px;
+}
+.dash-card-metric {
+  font-size: 36px;
+  font-weight: 800;
+  color: var(--navy);
+  margin-bottom: 16px;
+  letter-spacing: -1px;
+  font-variant-numeric: tabular-nums;
+}
+.dash-card-metric .unit {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--slate);
+}
+
+/* Progress Bar */
+.progress-bar {
+  height: 6px;
+  background: #eef1f6;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  border-radius: 3px;
+  width: 0;
+  transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.progress-fill.orange { background: linear-gradient(90deg, var(--orange), #ffa366); }
+.progress-fill.blue { background: linear-gradient(90deg, var(--blue), var(--blue-light)); }
+.progress-fill.teal { background: linear-gradient(90deg, var(--teal), var(--teal-light)); }
+
+/* Sparkline */
+.sparkline-container {
+  height: 48px;
+  display: flex;
+  align-items: flex-end;
+}
+.sparkline-container svg {
+  width: 100%;
+  height: 48px;
+}
+.sparkline-path {
+  fill: none;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 300;
+  stroke-dashoffset: 300;
+  transition: stroke-dashoffset 2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.sparkline-path.animated { stroke-dashoffset: 0; }
+.sparkline-area {
+  opacity: 0;
+  transition: opacity 1.5s ease 0.5s;
+}
+.sparkline-area.animated { opacity: 0.15; }
+
+/* Segmented Bar */
+.segmented-bar {
+  display: flex;
+  gap: 3px;
+  height: 6px;
+  border-radius: 3px;
+  overflow: hidden;
+}
+.seg {
+  height: 100%;
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.seg.animated { transform: scaleX(1); }
+.seg-1 { flex: 4; background: var(--blue); transition-delay: 0.2s; }
+.seg-2 { flex: 3; background: var(--teal); transition-delay: 0.35s; }
+.seg-3 { flex: 2; background: var(--orange); transition-delay: 0.5s; }
+.seg-4 { flex: 1.5; background: var(--slate-light); transition-delay: 0.65s; }
+
+/* Dot Grid */
+.dot-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+}
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.dot.animated {
+  opacity: 1;
+  transform: scale(1);
+}
+.dot.c-orange { background: var(--orange); }
+.dot.c-blue { background: var(--blue); }
+.dot.c-teal { background: var(--teal); }
+.dot.c-slate { background: #c8d1de; }
+
+/* Live pulse indicator */
+.live-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+  position: relative;
+}
+.live-dot::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  animation: pulse-ring 2s ease infinite;
+}
+.live-dot.orange { background: var(--orange); }
+.live-dot.orange::after { border: 2px solid var(--orange); }
+.live-dot.blue { background: var(--blue); }
+.live-dot.blue::after { border: 2px solid var(--blue); }
+.live-dot.teal { background: var(--teal); }
+.live-dot.teal::after { border: 2px solid var(--teal); }
+
+@keyframes pulse-ring {
+  0% { opacity: 0.6; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.8); }
+}
+
+/* ========== PRODUCTS GRID ========== */
+.products { background: var(--bg); }
+.products-header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+.products-header p {
+  max-width: 520px;
+  margin: 16px auto 0;
+  font-size: 17px;
+}
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.product-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 36px 32px;
+  transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.product-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--orange);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-xl);
+  border-color: transparent;
+}
+.product-card:hover::before {
+  transform: scaleX(1);
+}
+.product-card-viz {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.product-card-viz svg {
+  width: 56px;
+  height: 56px;
+}
+.product-card h3 {
+  margin-bottom: 4px;
+  color: var(--navy);
+}
+.product-card-metric {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--orange);
+  margin-bottom: 12px;
+}
+.product-card p {
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ========== SOCIAL PROOF ========== */
+.social-proof {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+  padding: 80px 0;
+}
+.social-proof h2 {
+  margin-bottom: 48px;
+  font-size: clamp(28px, 2.5vw, 38px);
+}
+.social-proof h2 .count-up {
+  color: var(--orange);
+}
+.logo-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  flex-wrap: wrap;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.logo-placeholder {
+  width: 120px;
+  height: 44px;
+  border-radius: var(--radius-sm);
+  background: #eef1f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 600;
+  color: #b0bac8;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.logo-placeholder.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ========== PIPELINE ========== */
+.pipeline {
+  background: var(--bg);
+  overflow: hidden;
+}
+.pipeline-header {
+  text-align: center;
+  margin-bottom: 72px;
+}
+.pipeline-header p {
+  max-width: 480px;
+  margin: 16px auto 0;
+  font-size: 17px;
+}
+.pipeline-flow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0;
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+}
+.pipeline-step {
+  flex: 0 0 220px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+.pipeline-circle {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+  box-shadow: var(--shadow-md);
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+.pipeline-step:hover .pipeline-circle {
+  border-color: var(--orange);
+  box-shadow: var(--shadow-lg), 0 0 0 4px rgba(255,123,46,0.1);
+}
+.pipeline-circle svg {
+  width: 36px;
+  height: 36px;
+}
+.pipeline-step h3 {
+  margin-bottom: 8px;
+  font-size: 18px;
+}
+.pipeline-step p {
+  font-size: 14px;
+  max-width: 180px;
+  margin: 0 auto;
+}
+
+/* Pipeline connectors */
+.pipeline-connector {
+  flex: 1;
+  height: 88px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  min-width: 80px;
+}
+.connector-line {
+  width: 100%;
+  height: 2px;
+  position: relative;
+  overflow: visible;
+}
+.connector-line-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--border);
+  border-radius: 1px;
+}
+/* Flowing dots animation */
+.flow-dot {
+  position: absolute;
+  top: -3px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--orange);
+  opacity: 0;
+  animation: flow-along 2.5s ease-in-out infinite;
+}
+.flow-dot:nth-child(2) { animation-delay: 0.8s; }
+.flow-dot:nth-child(3) { animation-delay: 1.6s; }
+
+@keyframes flow-along {
+  0% { left: -8px; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { left: calc(100% + 8px); opacity: 0; }
+}
+
+/* Arrow at end of connector */
+.connector-arrow {
+  position: absolute;
+  right: -6px;
+  top: -4px;
+  width: 0;
+  height: 0;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-left: 8px solid var(--border);
+}
+
+/* ========== CTA FOOTER ========== */
+.cta-footer {
+  background: var(--navy);
+  position: relative;
+  overflow: hidden;
+  padding: 100px 0 40px;
+  text-align: center;
+}
+.cta-footer h2 {
+  color: #fff;
+  margin-bottom: 16px;
+  position: relative;
+  z-index: 2;
+}
+.cta-subtitle {
+  color: rgba(255,255,255,0.6);
+  font-size: 18px;
+  margin-bottom: 40px;
+  position: relative;
+  z-index: 2;
+}
+.cta-footer .btn-demo {
+  font-size: 16px;
+  padding: 14px 32px;
+  border-radius: 10px;
+  position: relative;
+  z-index: 2;
+}
+.cta-footer .btn-demo:hover {
+  box-shadow: 0 6px 24px rgba(255,123,46,0.5);
+}
+
+/* Floating particles */
+.particles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+.particle {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0;
+  animation: float-particle linear infinite;
+}
+
+@keyframes float-particle {
+  0% {
+    transform: translateY(0) translateX(0);
+    opacity: 0;
+  }
+  10% { opacity: 0.4; }
+  90% { opacity: 0.4; }
+  100% {
+    transform: translateY(-400px) translateX(40px);
+    opacity: 0;
+  }
+}
+
+.copyright {
+  margin-top: 80px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.35);
+  position: relative;
+  z-index: 2;
+}
+.copyright a {
+  color: rgba(255,255,255,0.5);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* ========== REDUCED MOTION ========== */
+@media (prefers-reduced-motion: reduce) {
+  .fade-in { transition: opacity 0.3s ease; transform: none; }
+  .sparkline-path { transition: none; stroke-dashoffset: 0; }
+  .seg { transition: none; transform: scaleX(1); }
+  .dot { transition: none; opacity: 1; transform: scale(1); }
+  .flow-dot { animation: none; }
+  .particle { animation: none; }
+  .progress-fill { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- ====== NAVIGATION ====== -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a class="nav-wordmark" href="#">textkernel</a>
+    <ul class="nav-links">
+      <li><a href="#products">Products</a></li>
+      <li><a href="#pipeline">Solutions</a></li>
+      <li><a href="#social-proof">Cases</a></li>
+      <li><a href="#cta">Company</a></li>
+      <li><a href="#cta" class="btn-demo">Book a demo
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ====== HERO ====== -->
+<section class="hero" id="hero">
+  <div class="container">
+    <span class="label fade-in">AI-Powered Recruitment Intelligence</span>
+    <h1 class="fade-in fade-in-delay-1">Connect people and jobs,<br>smarter than ever.</h1>
+    <p class="hero-subtitle fade-in fade-in-delay-2">Trusted by 2,500+ organizations to transform hiring with AI that understands skills, matches talent, and reveals market insights.</p>
+
+    <div class="dashboard-grid" id="dashboard">
+      <!-- Card 1: Parsing Accuracy -->
+      <div class="dash-card fade-in fade-in-delay-1">
+        <div class="dash-card-label"><span class="live-dot orange"></span>Parsing Accuracy</div>
+        <div class="dash-card-metric"><span class="count-up" data-target="97.3" data-decimals="1" data-suffix="%">0</span></div>
+        <div class="progress-bar">
+          <div class="progress-fill orange" data-width="97.3"></div>
+        </div>
+      </div>
+
+      <!-- Card 2: Time to Hire -->
+      <div class="dash-card fade-in fade-in-delay-2">
+        <div class="dash-card-label"><span class="live-dot blue"></span>Time to Hire</div>
+        <div class="dash-card-metric"><span class="count-up" data-target="42" data-decimals="0" data-prefix="-" data-suffix="%">0</span></div>
+        <div class="sparkline-container">
+          <svg viewBox="0 0 200 48" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="sparkGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#4a9eff"/>
+                <stop offset="100%" stop-color="#4a9eff" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <path class="sparkline-area" d="M0,40 L20,38 L40,35 L60,36 L80,30 L100,28 L120,22 L140,18 L160,14 L180,10 L200,6 L200,48 L0,48 Z" fill="url(#sparkGrad)"/>
+            <path class="sparkline-path" d="M0,40 L20,38 L40,35 L60,36 L80,30 L100,28 L120,22 L140,18 L160,14 L180,10 L200,6" stroke="#4a9eff"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Card 3: Skills Mapped -->
+      <div class="dash-card fade-in fade-in-delay-3">
+        <div class="dash-card-label"><span class="live-dot teal"></span>Skills Mapped</div>
+        <div class="dash-card-metric"><span class="count-up" data-target="3.2" data-decimals="1" data-suffix="M">0</span></div>
+        <div class="segmented-bar">
+          <div class="seg seg-1"></div>
+          <div class="seg seg-2"></div>
+          <div class="seg seg-3"></div>
+          <div class="seg seg-4"></div>
+        </div>
+      </div>
+
+      <!-- Card 4: Markets Covered -->
+      <div class="dash-card fade-in fade-in-delay-4">
+        <div class="dash-card-label">Markets Covered</div>
+        <div class="dash-card-metric"><span class="count-up" data-target="15" data-decimals="0" data-suffix="+">0</span></div>
+        <div class="dot-grid" id="dotGrid"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== PRODUCTS ====== -->
+<section class="products" id="products">
+  <div class="container">
+    <div class="products-header">
+      <span class="label fade-in">Products</span>
+      <h2 class="fade-in fade-in-delay-1">Everything you need to hire smarter</h2>
+      <p class="fade-in fade-in-delay-2">Four powerful modules that work together to transform your talent pipeline.</p>
+    </div>
+    <div class="products-grid">
+
+      <!-- Parser -->
+      <div class="product-card fade-in">
+        <div class="product-card-viz">
+          <svg viewBox="0 0 56 56" fill="none">
+            <rect x="8" y="4" width="28" height="36" rx="4" stroke="#1a2744" stroke-width="2" fill="#f8f9fc"/>
+            <line x1="14" y1="14" x2="30" y2="14" stroke="#e4e8f0" stroke-width="2" stroke-linecap="round"/>
+            <line x1="14" y1="20" x2="26" y2="20" stroke="#e4e8f0" stroke-width="2" stroke-linecap="round"/>
+            <line x1="14" y1="26" x2="28" y2="26" stroke="#e4e8f0" stroke-width="2" stroke-linecap="round"/>
+            <line x1="14" y1="32" x2="22" y2="32" stroke="#e4e8f0" stroke-width="2" stroke-linecap="round"/>
+            <path d="M36 16L46 10" stroke="#ff7b2e" stroke-width="2" stroke-linecap="round"/>
+            <path d="M36 22L48 22" stroke="#4a9eff" stroke-width="2" stroke-linecap="round"/>
+            <path d="M36 28L46 34" stroke="#00c896" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="49" cy="9" r="4" fill="#ff7b2e" opacity="0.2"/><circle cx="49" cy="9" r="2" fill="#ff7b2e"/>
+            <circle cx="51" cy="22" r="4" fill="#4a9eff" opacity="0.2"/><circle cx="51" cy="22" r="2" fill="#4a9eff"/>
+            <circle cx="49" cy="35" r="4" fill="#00c896" opacity="0.2"/><circle cx="49" cy="35" r="2" fill="#00c896"/>
+          </svg>
+        </div>
+        <h3>Parser</h3>
+        <div class="product-card-metric">97.3% accuracy</div>
+        <p>Extract structured data from any resume or job posting with LLM-powered parsing.</p>
+      </div>
+
+      <!-- Source & Match -->
+      <div class="product-card fade-in fade-in-delay-1">
+        <div class="product-card-viz">
+          <svg viewBox="0 0 56 56" fill="none">
+            <circle cx="14" cy="28" r="10" stroke="#4a9eff" stroke-width="2" fill="#f8f9fc"/>
+            <circle cx="42" cy="28" r="10" stroke="#ff7b2e" stroke-width="2" fill="#f8f9fc"/>
+            <path d="M24 28H32" stroke="#00c896" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="0 0">
+              <animate attributeName="stroke-dasharray" values="0 8;8 0;0 8" dur="2s" repeatCount="indefinite"/>
+            </path>
+            <circle cx="28" cy="28" r="3" fill="#00c896" opacity="0.3">
+              <animate attributeName="r" values="2;4;2" dur="2s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.5;0.15;0.5" dur="2s" repeatCount="indefinite"/>
+            </circle>
+            <!-- Person icon left -->
+            <circle cx="14" cy="25" r="3" fill="#4a9eff"/>
+            <path d="M8 35a6 6 0 0112 0" fill="#4a9eff" opacity="0.3"/>
+            <!-- Briefcase icon right -->
+            <rect x="38" y="25" width="8" height="6" rx="1" fill="#ff7b2e"/>
+            <path d="M40 25v-2a2 2 0 014 0v2" stroke="#ff7b2e" stroke-width="1.5" fill="none"/>
+          </svg>
+        </div>
+        <h3>Source &amp; Match</h3>
+        <div class="product-card-metric">3x faster matching</div>
+        <p>Semantic matching engine that understands skills, not just keywords.</p>
+      </div>
+
+      <!-- Skills Intelligence -->
+      <div class="product-card fade-in fade-in-delay-2">
+        <div class="product-card-viz">
+          <svg viewBox="0 0 56 56" fill="none">
+            <!-- Radar chart -->
+            <polygon points="28,8 48,20 48,40 28,52 8,40 8,20" fill="none" stroke="#e4e8f0" stroke-width="1"/>
+            <polygon points="28,16 40,24 40,36 28,44 16,36 16,24" fill="none" stroke="#e4e8f0" stroke-width="1"/>
+            <polygon points="28,12 44,22 44,38 28,48 12,38 12,22" fill="#4a9eff" fill-opacity="0.1" stroke="#4a9eff" stroke-width="1.5"/>
+            <polygon points="28,10 46,21 42,40 28,48 14,38 10,21" fill="#00c896" fill-opacity="0.1" stroke="#00c896" stroke-width="1.5"/>
+            <circle cx="28" cy="10" r="3" fill="#00c896"/>
+            <circle cx="46" cy="21" r="3" fill="#4a9eff"/>
+            <circle cx="42" cy="40" r="3" fill="#00c896"/>
+            <circle cx="14" cy="38" r="3" fill="#4a9eff"/>
+            <circle cx="10" cy="21" r="3" fill="#00c896"/>
+          </svg>
+        </div>
+        <h3>Skills Intelligence</h3>
+        <div class="product-card-metric">3.2M skills mapped</div>
+        <p>Anticipate skill demands. Identify upskilling pathways. Hire for the future.</p>
+      </div>
+
+      <!-- Labor Market Insights -->
+      <div class="product-card fade-in fade-in-delay-3">
+        <div class="product-card-viz">
+          <svg viewBox="0 0 56 56" fill="none">
+            <!-- Trend chart -->
+            <line x1="6" y1="48" x2="50" y2="48" stroke="#e4e8f0" stroke-width="1"/>
+            <line x1="6" y1="36" x2="50" y2="36" stroke="#e4e8f0" stroke-width="0.5" stroke-dasharray="3 3"/>
+            <line x1="6" y1="24" x2="50" y2="24" stroke="#e4e8f0" stroke-width="0.5" stroke-dasharray="3 3"/>
+            <line x1="6" y1="12" x2="50" y2="12" stroke="#e4e8f0" stroke-width="0.5" stroke-dasharray="3 3"/>
+            <path d="M6,42 L14,38 L22,34 L30,28 L38,20 L46,14 L50,10" fill="none" stroke="#ff7b2e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M6,42 L14,38 L22,34 L30,28 L38,20 L46,14 L50,10 L50,48 L6,48 Z" fill="#ff7b2e" opacity="0.08"/>
+            <circle cx="30" cy="28" r="3" fill="#ff7b2e" opacity="0.3"/><circle cx="30" cy="28" r="1.5" fill="#ff7b2e"/>
+            <circle cx="50" cy="10" r="3" fill="#ff7b2e" opacity="0.3"/><circle cx="50" cy="10" r="1.5" fill="#ff7b2e"/>
+          </svg>
+        </div>
+        <h3>Labor Market Insights</h3>
+        <div class="product-card-metric">15+ markets</div>
+        <p>Real-time labor market data trusted by Fortune 500 companies and staffing agencies.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ====== SOCIAL PROOF ====== -->
+<section class="social-proof" id="social-proof">
+  <div class="container">
+    <h2 class="fade-in">Trusted by <span class="count-up" data-target="2500" data-decimals="0" data-suffix="+" data-separator=",">0</span> organizations worldwide</h2>
+    <div class="logo-row">
+      <div class="logo-placeholder">Logo</div>
+      <div class="logo-placeholder">Logo</div>
+      <div class="logo-placeholder">Logo</div>
+      <div class="logo-placeholder">Logo</div>
+      <div class="logo-placeholder">Logo</div>
+      <div class="logo-placeholder">Logo</div>
+      <div class="logo-placeholder">Logo</div>
+    </div>
+  </div>
+</section>
+
+<!-- ====== PIPELINE ====== -->
+<section class="pipeline" id="pipeline">
+  <div class="container">
+    <div class="pipeline-header">
+      <span class="label fade-in">How It Works</span>
+      <h2 class="fade-in fade-in-delay-1">From raw data to better hires</h2>
+      <p class="fade-in fade-in-delay-2">Three steps. One platform. Transformative results.</p>
+    </div>
+    <div class="pipeline-flow fade-in">
+
+      <!-- Step 1 -->
+      <div class="pipeline-step">
+        <div class="pipeline-circle">
+          <svg viewBox="0 0 36 36" fill="none">
+            <rect x="6" y="4" width="18" height="24" rx="3" stroke="#ff7b2e" stroke-width="2" fill="#fff"/>
+            <line x1="10" y1="11" x2="20" y2="11" stroke="#e4e8f0" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="10" y1="15" x2="18" y2="15" stroke="#e4e8f0" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="10" y1="19" x2="16" y2="19" stroke="#e4e8f0" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M26 12L30 8" stroke="#ff7b2e" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M26 18L32 18" stroke="#4a9eff" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M26 24L30 28" stroke="#00c896" stroke-width="1.5" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h3>Data In</h3>
+        <p>Resumes, job posts, and skills data flow in</p>
+      </div>
+
+      <!-- Connector 1 -->
+      <div class="pipeline-connector">
+        <div class="connector-line">
+          <div class="connector-line-bg"></div>
+          <div class="flow-dot"></div>
+          <div class="flow-dot"></div>
+          <div class="flow-dot"></div>
+          <div class="connector-arrow"></div>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="pipeline-step">
+        <div class="pipeline-circle">
+          <svg viewBox="0 0 36 36" fill="none">
+            <!-- Brain / AI node -->
+            <circle cx="18" cy="18" r="12" stroke="#4a9eff" stroke-width="2" fill="#fff"/>
+            <circle cx="18" cy="13" r="2" fill="#4a9eff"/>
+            <circle cx="13" cy="21" r="2" fill="#ff7b2e"/>
+            <circle cx="23" cy="21" r="2" fill="#00c896"/>
+            <line x1="18" y1="15" x2="14" y2="20" stroke="#5a6a85" stroke-width="1" opacity="0.5"/>
+            <line x1="18" y1="15" x2="22" y2="20" stroke="#5a6a85" stroke-width="1" opacity="0.5"/>
+            <line x1="15" y1="21" x2="21" y2="21" stroke="#5a6a85" stroke-width="1" opacity="0.5"/>
+            <circle cx="18" cy="18" r="12" stroke="#4a9eff" stroke-width="2" fill="none" stroke-dasharray="4 4">
+              <animateTransform attributeName="transform" type="rotate" from="0 18 18" to="360 18 18" dur="12s" repeatCount="indefinite"/>
+            </circle>
+          </svg>
+        </div>
+        <h3>AI Processing</h3>
+        <p>Parsing, matching, and intelligence at scale</p>
+      </div>
+
+      <!-- Connector 2 -->
+      <div class="pipeline-connector">
+        <div class="connector-line">
+          <div class="connector-line-bg"></div>
+          <div class="flow-dot"></div>
+          <div class="flow-dot"></div>
+          <div class="flow-dot"></div>
+          <div class="connector-arrow"></div>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="pipeline-step">
+        <div class="pipeline-circle">
+          <svg viewBox="0 0 36 36" fill="none">
+            <!-- Dashboard icon -->
+            <rect x="4" y="6" width="28" height="20" rx="3" stroke="#00c896" stroke-width="2" fill="#fff"/>
+            <rect x="8" y="10" width="6" height="8" rx="1" fill="#00c896" opacity="0.2"/>
+            <rect x="8" y="14" width="6" height="4" rx="1" fill="#00c896"/>
+            <rect x="16" y="10" width="6" height="8" rx="1" fill="#4a9eff" opacity="0.2"/>
+            <rect x="16" y="12" width="6" height="6" rx="1" fill="#4a9eff"/>
+            <rect x="24" y="10" width="5" height="8" rx="1" fill="#ff7b2e" opacity="0.2"/>
+            <rect x="24" y="11" width="5" height="7" rx="1" fill="#ff7b2e"/>
+            <rect x="14" y="28" width="8" height="2" rx="1" fill="#e4e8f0"/>
+          </svg>
+        </div>
+        <h3>Actionable Insights</h3>
+        <p>Better hires, faster, with data you can trust</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ====== CTA FOOTER ====== -->
+<section class="cta-footer" id="cta">
+  <div class="particles" id="particles"></div>
+  <div class="container">
+    <h2 class="fade-in">Ready to transform your hiring?</h2>
+    <p class="cta-subtitle fade-in fade-in-delay-1">See how Textkernel's AI can work for your organization.</p>
+    <a href="#" class="btn-demo fade-in fade-in-delay-2">
+      Book a Demo
+      <svg width="16" height="16" viewBox="0 0 14 14" fill="none"><path d="M1 7h12M8 2l5 5-5 5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <div class="copyright">
+      &copy; 2026 Textkernel. All rights reserved. &mdash; A design concept by <a href="#">Adrian</a>
+    </div>
+  </div>
+</section>
+
+<script>
+// ========== NAV SCROLL EFFECT ==========
+const nav = document.getElementById('nav');
+let lastScroll = 0;
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 20) {
+    nav.classList.add('scrolled');
+  } else {
+    nav.classList.remove('scrolled');
+  }
+}, { passive: true });
+
+// ========== DOT GRID GENERATION ==========
+const dotGrid = document.getElementById('dotGrid');
+const dotColors = ['c-orange','c-blue','c-teal','c-blue','c-teal','c-orange','c-slate','c-blue','c-teal','c-orange','c-blue','c-teal','c-slate','c-orange','c-blue','c-teal','c-blue','c-teal'];
+dotColors.forEach((c, i) => {
+  const dot = document.createElement('div');
+  dot.className = `dot ${c}`;
+  dot.style.transitionDelay = `${0.3 + i * 0.05}s`;
+  dotGrid.appendChild(dot);
+});
+
+// ========== FLOATING PARTICLES ==========
+const particlesContainer = document.getElementById('particles');
+const particleColors = ['rgba(255,123,46,0.4)', 'rgba(74,158,255,0.3)', 'rgba(0,200,150,0.3)', 'rgba(255,255,255,0.1)'];
+for (let i = 0; i < 30; i++) {
+  const p = document.createElement('div');
+  p.className = 'particle';
+  const size = 3 + Math.random() * 6;
+  p.style.width = size + 'px';
+  p.style.height = size + 'px';
+  p.style.left = Math.random() * 100 + '%';
+  p.style.bottom = -20 + 'px';
+  p.style.background = particleColors[Math.floor(Math.random() * particleColors.length)];
+  p.style.animationDuration = (6 + Math.random() * 10) + 's';
+  p.style.animationDelay = (Math.random() * 8) + 's';
+  particlesContainer.appendChild(p);
+}
+
+// ========== INTERSECTION OBSERVER — FADE IN ==========
+const fadeEls = document.querySelectorAll('.fade-in');
+const fadeObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+fadeEls.forEach(el => fadeObserver.observe(el));
+
+// ========== COUNT-UP ANIMATION ==========
+function animateCountUp(el) {
+  const target = parseFloat(el.dataset.target);
+  const decimals = parseInt(el.dataset.decimals) || 0;
+  const prefix = el.dataset.prefix || '';
+  const suffix = el.dataset.suffix || '';
+  const useSeparator = el.dataset.separator === ',';
+  const duration = 2000;
+  const start = performance.now();
+
+  function update(now) {
+    const elapsed = now - start;
+    const progress = Math.min(elapsed / duration, 1);
+    // Ease out cubic
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const current = eased * target;
+
+    let display = current.toFixed(decimals);
+    if (useSeparator) {
+      const parts = display.split('.');
+      parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      display = parts.join('.');
+    }
+    el.textContent = prefix + display + suffix;
+
+    if (progress < 1) {
+      requestAnimationFrame(update);
+    }
+  }
+  requestAnimationFrame(update);
+}
+
+// ========== DASHBOARD CARD ANIMATIONS ==========
+const dashboard = document.getElementById('dashboard');
+let dashboardAnimated = false;
+
+const dashObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !dashboardAnimated) {
+      dashboardAnimated = true;
+
+      // Count-up numbers
+      document.querySelectorAll('#dashboard .count-up').forEach(el => {
+        animateCountUp(el);
+      });
+
+      // Progress bars
+      document.querySelectorAll('.progress-fill').forEach(bar => {
+        setTimeout(() => {
+          bar.style.width = bar.dataset.width + '%';
+        }, 300);
+      });
+
+      // Sparklines
+      document.querySelectorAll('.sparkline-path').forEach(path => {
+        setTimeout(() => path.classList.add('animated'), 400);
+      });
+      document.querySelectorAll('.sparkline-area').forEach(area => {
+        setTimeout(() => area.classList.add('animated'), 400);
+      });
+
+      // Segmented bar
+      document.querySelectorAll('.seg').forEach(seg => {
+        setTimeout(() => seg.classList.add('animated'), 300);
+      });
+
+      // Dots
+      document.querySelectorAll('.dot').forEach(dot => {
+        setTimeout(() => dot.classList.add('animated'), 300);
+      });
+    }
+  });
+}, { threshold: 0.3 });
+dashObserver.observe(dashboard);
+
+// ========== SOCIAL PROOF COUNT-UP ==========
+const socialProof = document.querySelector('.social-proof');
+let socialAnimated = false;
+const socialObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !socialAnimated) {
+      socialAnimated = true;
+      document.querySelectorAll('.social-proof .count-up').forEach(el => {
+        animateCountUp(el);
+      });
+      // Stagger logo fade-in
+      document.querySelectorAll('.logo-placeholder').forEach((logo, i) => {
+        setTimeout(() => logo.classList.add('visible'), 200 + i * 100);
+      });
+    }
+  });
+}, { threshold: 0.3 });
+socialObserver.observe(socialProof);
+
+// ========== SMOOTH SCROLL FOR NAV LINKS ==========
+document.querySelectorAll('.nav-links a[href^="#"]').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const target = document.querySelector(link.getAttribute('href'));
+    if (target) {
+      const offset = 80;
+      const top = target.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top, behavior: 'smooth' });
+    }
+  });
+});
+</script>
+</body>
+</html>
